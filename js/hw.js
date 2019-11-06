@@ -114,14 +114,15 @@ function isInteger(a) { //ToDo
 
 function toFraction(a) {
     let str = a.toString();
+    if (str.indexOf('.') < 0) {
+        return newFraction(a, 1);
+    }
     let factor = Math.pow(10, (str.length - str.indexOf('.')-1)); // Find the factor to get integer numerator
-
-console.log(a * factor);
-
-    let c = newFraction(a, 1);
+    return reduction(newFraction(a * factor, factor));
 }
 
-toFraction(12);
+// showFraction( toFraction(21.1));
+// showFraction( toFraction(2.258));
 
 function isFraction(a) {
     return (isObject(a) && "denominator" in a && "_numerator" in a && a.denominator > 0);
@@ -138,6 +139,10 @@ function reduction(a) {
     return a;
 };
 
+//a - numerator
+//b - denominator
+//a, b integer
+//Return object
 function newFraction(a, b) {
     return {
         whole: function() {
