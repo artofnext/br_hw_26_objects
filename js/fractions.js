@@ -11,40 +11,72 @@
 //     }
 
 //     numerator() {
-//         return this._numerator % this.denominator;
-//     }
-// }
+    //         return this._numerator % this.denominator;
+    //     }
+    // }
 
-// let whole = function() {
-//     return Math.floor(this._numerator / this.denominator);
+    // let whole = function() {
+        //     return Math.floor(this._numerator / this.denominator);
 // };
 
 // let numerator = function() {
-//     return this._numerator % this.denominator;
+    //     return this._numerator % this.denominator;
+    // };
+    
+    // let fr1 = {
+        //     whole: function() {
+            //         return Math.floor(this._numerator / this.denominator);
+            //     },
+            //     numerator: function() {
+                //         return this._numerator % this.denominator;
+                //     },
+                //     _numerator: 2,
+                //     denominator: 3,
+                // };
+                
+                // let fr2 = {
+                    //     whole: function() {
+                        //         return Math.floor(this._numerator / this.denominator);
+                        //     },
+                        //     numerator: function() {
+                            //         return this._numerator % this.denominator;
+                            //     },
+                            //     _numerator: 8,
+                            //     denominator: 4,
 // };
 
-// let fr1 = {
-//     whole: function() {
-//         return Math.floor(this._numerator / this.denominator);
-//     },
-//     numerator: function() {
-//         return this._numerator % this.denominator;
-//     },
-//     _numerator: 2,
-//     denominator: 3,
-// };
 
-// let fr2 = {
-//     whole: function() {
-//         return Math.floor(this._numerator / this.denominator);
-//     },
-//     numerator: function() {
-//         return this._numerator % this.denominator;
-//     },
-//     _numerator: 8,
-//     denominator: 4,
-// };
+//num - numerator
+//denom - denominator
+//
+//Return object
+function newFraction(num = 0, denom = 1) {
 
+    return {
+        reduct: function () {
+            let reducer = gcd(this._numerator, this.denominator);
+            this._numerator = this._numerator / reducer;
+            this.denominator = this.denominator / reducer;
+        },
+        show: function () {
+            if (this.numerator()) {
+                console.log(`${this.whole()} ${this.numerator()}/${this.denominator}`);
+            } else {
+                console.log(`${this.whole()}`);
+            }
+        },
+        whole: function () {
+            return Math.floor((this._numerator - this.numerator()) / this.denominator); //Workout negative numbers
+        },
+        numerator: function () {
+            return this._numerator % this.denominator;
+        },
+        _numerator: Math.round(num),
+        denominator:  Math.round(denom),
+    };
+
+    // console.log('Wrong input! Denominator should be greater 0');
+}
 
 //Fractions init
 
@@ -94,23 +126,6 @@ function reduction(a) {
     return a;
 };
 
-//a - numerator
-//b - denominator
-//a, b integer
-//Return object
-function newFraction(a, b) {
-    return {
-        whole: function() {
-            return Math.floor((this._numerator - this.numerator()) / this.denominator); //Workout negative numbers
-        },
-        numerator:  function() {
-            return this._numerator % this.denominator;
-        },
-        _numerator: a,
-        denominator: b,
-    };
-}
-
 function multiply(a, b) {
     let c = newFraction();
     // c.whole = 0;
@@ -120,8 +135,18 @@ function multiply(a, b) {
     return reduction(c);
 };
 
+function divide(a, b) {
+    if (b._numerator != 0) {
+        let c = newFraction(b._numerator > 0 ? b.denominator : b.denominator * -1, Math.abs(b._numerator)); //Switching sign to numerator, denominator always > 0
+        return multiply(a, c);
+    }
+
+    console.log('Ahtung! Attempt to divide on ZERO!')
+    return false;
+}
+
 function add(a, b) {
-    let c = newFraction(); // ToDo rewrite!
+    let c = newFraction(); // ToDo rewrite with values!
     let lcmAB = lcm (a.denominator, b.denominator);
     let factorA = lcmAB / a.denominator;
     let factorB = lcmAB / b.denominator;
@@ -130,16 +155,21 @@ function add(a, b) {
     return reduction(c);
 }
 
-function substract(a, b) {
+function substract(a, b) { //ToDo rewrite - it mustn`t change the argument!
     b._numerator = b._numerator * -1;
     return reduction(add(a, b))
 }
+
+
 
 console.log('Origin a:');
 console.table(fr1);
 console.log('Origin b:');
 console.table(fr2);
 
+console.log('Divide a / b:');
+console.table(divide(fr1, fr2));
+showFraction(divide(fr1, fr2));
 console.log('Multiplyed a * b:');
 // console.table(multiply(fr1, fr2));
 showFraction(multiply(fr1, fr2));
