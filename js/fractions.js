@@ -1,49 +1,3 @@
-// import { isNull } from "util";
-//Car Object
-let car = {
-    manufacturer: "handmade",
-    model: "unic",
-    max_speed: 120,
-    engine_power: 100,
-    doors: 5,
-    max_payload: 1000,
-    seats: 5,
-};
-
-console.log(typeof(car));
-
-function isObject(obj) {
-    return (typeof(obj) == 'object' && !!obj);
-}
-
-function showObject(obj) {
-
-    if (isObject(obj)) {
-        for (let key in obj) {
-            console.log(`Property: ${key} - Value: ${obj[key]}`);
-        }
-    } else {
-        console.log(`Wrong function param!`);
-    }
-};
-
-function showObjectAlt(obj) {
-    if (isObject(obj)) {
-        console.table(obj);
-    } else {
-        console.log(`Wrong function param!`);
-    }
-};
-
-function startShow() {
-
-    console.log('Show With For');
-    showObject(car);
-    
-    console.log('Show With Table');
-    showObjectAlt(car);
-}
-
 //Fractions
 
 // class Fraction {
@@ -91,6 +45,7 @@ function startShow() {
 //     denominator: 4,
 // };
 
+
 //Fractions init
 
 let fr1 = newFraction(23, 23);
@@ -99,7 +54,7 @@ let fr2 = newFraction(4, 2);
 
 let fr3 = 2;
 
-
+//ToDo rewrite as a method
 function showFraction(a) {
     if (a.numerator()) {
         console.log(`${a.whole()} ${a.numerator()}/${a.denominator}`);
@@ -131,7 +86,7 @@ function isFraction(a) {
 console.log(isFraction(fr1));
 console.log(isFraction(fr3));
 
-
+//ToDo rewrite as a method
 function reduction(a) {
     let reducer = gcd (a._numerator, a.denominator);
     a._numerator = a._numerator / reducer;
@@ -166,7 +121,7 @@ function multiply(a, b) {
 };
 
 function add(a, b) {
-    let c = newFraction();
+    let c = newFraction(); // ToDo rewrite!
     let lcmAB = lcm (a.denominator, b.denominator);
     let factorA = lcmAB / a.denominator;
     let factorB = lcmAB / b.denominator;
